@@ -1,0 +1,19 @@
+---
+
+- name: Create config-per-user path
+  file:
+    path:  '{{ ocserv_config_per_user_path }}'
+    group: '{{ ocserv_group }}'
+    mode:  0750
+    state: directory
+
+- name: Add per-user configs
+  template:
+    src:   config-per-user.j2
+    dest:  '{{ ocserv_config_per_user_path }}/{{ item.name }}'
+    group: '{{ ocserv_group }}'
+    mode:  0640
+  with_items: '{{ ocserv_users }}'
+  when:
+    - item.config_per_user is defined
+  notify: reload ocserv

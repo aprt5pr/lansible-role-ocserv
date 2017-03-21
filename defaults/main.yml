@@ -1,0 +1,40 @@
+---
+
+ocserv_config_path:         /etc/ocserv
+ocserv_auth_method:         plain
+ocserv_auth_plain_file:     '{{ ocserv_config_path }}/users.passwd'
+ocserv_users:               []
+
+ocserv_tcp_port:            443
+ocserv_udp_port:            443
+ocserv_isolate_workers:     'true'
+ocserv_max_clients:         16
+ocserv_max_same_clients:    2
+ocserv_keepalive:           32400 # seconds
+ocserv_dpd:                 90    # seconds
+ocserv_mobile_dpd:          1800  # seconds
+ocserv_mtu_discovery:       'false'
+ocserv_cert_user_oid:       '0.9.2342.19200300.100.1.1' # only used if auth is 'cert'
+ocserv_tls_prio:            'NORMAL:%SERVER_PRECEDENCE:%COMPAT:-VERS-SSL3.0'
+ocserv_auth_timeout:        240 # seconds
+ocserv_min_reauth_time:     300 # seconds
+ocserv_max_ban_score:       50
+ocserv_ban_reset_time:      300 # seconds
+ocserv_cookie_timeout:      300 # seconds
+ocserv_deny_roaming:        'false'
+ocserv_rekey_time:          172800 # seconds
+ocserv_rekey_method:        ssl
+ocserv_use_occtl:           'true'
+ocserv_pid_file:            /var/run/ocserv.pid
+ocserv_device:              vpns
+ocserv_use_predictable_ips: 'true'
+ocserv_ping_leases:         'false'
+ocserv_default_domain:      example.com
+ocserv_ipv4_network:        10.37.73.0/27
+# Level 3 Public DNS servers
+ocserv_dns_servers:
+  - 209.244.0.3
+  - 209.244.0.4
+ocserv_config_per_user_path:  '{{ ocserv_config_path }}/config-per-user/'
+ocserv_config_per_group_path: '{{ ocserv_config_path }}/config-per-group/'
+ocserv_enable_ip_forwarding:  True

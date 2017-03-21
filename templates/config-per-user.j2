@@ -1,0 +1,12 @@
+#jinja2: lstrip_blocks: "True"
+{% if item.config_per_user.explicit_ipv4 is defined %}
+explicit-ipv4  = {{ item.config_per_user.explicit_ipv4 }}
+{% endif %}
+
+{% for r in item.config_per_user.routes | default([]) %}
+route          = {{ r }}
+{% endfor %}
+
+{% for r in item.config_per_user.noroutes | default([]) %}
+no-route       = {{ r }}
+{% endfor %}

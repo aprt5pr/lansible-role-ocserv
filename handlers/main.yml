@@ -1,0 +1,10 @@
+---
+
+- name: restart ocserv
+  service: name=ocserv state=restarted
+
+- name: reload ocserv
+  service: name=ocserv state=reloaded
+
+- name: reload systemd
+  command: systemctl daemon-reload

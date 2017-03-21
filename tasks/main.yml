@@ -1,0 +1,66 @@
+---
+
+- name: Gather OS-specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "vars/{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+        - "vars/{{ ansible_distribution }}.yml"
+      skip: True
+
+- name: Include OS-specific tasks
+  include: '{{ ansible_distribution }}.yml'
+
+- name: Include user-related tasks
+  include: user.yml
+  tags:
+    - ocserv-users
+
+- name: Include plain auth tasks 
+  include: plain_auth.yml
+  when:
+    - ocserv_auth_method == 'plain'
+
+- name: Add SSL certificate file
+  copy:
+    content: '{{ ocserv_server_cert_content }}'
+    dest:    '{{ ocserv_server_cert_path }}'
+    owner:   root
+    group:   root
+    mode:    0644
+  notify: restart ocserv
+  when: ocserv_server_cert_content is defined
+
+- name: Add SSL private key file
+  copy:
+    content: '{{ ocserv_server_key_content }}'
+    dest:    '{{ ocserv_server_key_path }}'
+    owner:   root
+    group:   root
+    mode:    0600
+  notify: restart ocserv
+  when: ocserv_server_key_content is defined
+
+- name: Enable forwarding from tun interfaces to public interface
+  sysctl:
+    name:       net.ipv4.ip_forward
+    value:      1   
+    sysctl_set: yes 
+    state:      present
+    reload:     yes 
+  when: ocserv_enable_ip_forwarding
+
+- name: Configure Ocserv for CentOS
+  template:
+    src:  ocserv.conf.j2
+    dest: /etc/ocserv/ocserv.conf
+    validate: ocserv --test-config --config=%s
+  notify: restart ocserv
+  when:
+    - ansible_distribution == 'CentOS'
+
+- name: Start and enable Ocserv
+  service:
+    name:  ocserv
+    state: started
+    enabled: yes
