@@ -1,0 +1,15 @@
+---
+
+- name: Install Ocserv via APT
+  apt:
+    name:  ocserv
+    state: present
+    update_cache: yes
+
+- name: Ubuntu DTLS workaround (https://bugs.launchpad.net/ubuntu/+source/ocserv/+bug/1613155)
+  service:
+    name:  ocserv.socket
+    state: stopped
+    enabled: no
+  when:
+    - ansible_distribution_version == '16.04'

@@ -1,0 +1,22 @@
+---
+
+ocserv_user:                 nobody
+ocserv_group:                daemon
+ocserv_socket_file:          /var/run/ocserv-socket
+ocserv_server_cert_path:     /etc/ssl/certs/ssl-cert-snakeoil.pem
+ocserv_server_key_path:      /etc/ssl/private/ssl-cert-snakeoil.key
+ocserv_ca_cert:              /etc/ssl/certs/ssl-cert-snakeoil.pem
+ocserv_systemd_unit_content: |
+  [Unit]
+  Description=OpenConnect SSL VPN server
+  Documentation=man:ocserv(8)
+  After=network-online.target
+  
+  [Service]
+  PrivateTmp=true
+  PIDFile=/var/run/ocserv.pid
+  ExecStart=/usr/sbin/ocserv --foreground --pid-file {{ ocserv_pid_file }} --config {{ ocserv_config_path}}/ocserv.conf
+  ExecReload=/bin/kill -HUP $MAINPID
+  
+  [Install]
+  WantedBy=multi-user.target
