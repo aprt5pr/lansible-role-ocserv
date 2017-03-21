@@ -21,6 +21,27 @@
   when:
     - ocserv_auth_method == 'plain'
 
+- name: Override SystemD Unit
+  copy:
+    content: '{{ ocserv_systemd_unit_content }}'
+    dest:    '{{ ocserv_systemd_unit_path }}'
+    owner:   root
+    group:   root
+    mode:    0644
+  notify:
+    - reload systemd
+    - restart ocserv
+  register: systemd_unit
+  when: ocserv_systemd_unit_content is defined
+
+- name: Start using the new unit file immediately - I
+  command: systemctl daemon-reload
+  when: systemd_unit | changed
+
+- name: Start using the new unit file immediately - II
+  command: systemctl restart ocserv
+  when: systemd_unit | changed
+
 - name: Add SSL certificate file
   copy:
     content: '{{ ocserv_server_cert_content }}'
