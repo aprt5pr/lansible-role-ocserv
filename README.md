@@ -4,13 +4,13 @@
 
 This role installs OpenConnect SSL VPN Server (ocserv).
 
-### Requirements
-
-- Ansible >= 2.0
-
 ### What is Ocserv?
 
 Ocserv is an open source SSL VPN server. Check out https://gitlab.com/ocserv/ocserv for more info.
+
+### Requirements
+
+- Ansible >= 2.0
 
 ### How can I contribute code to this project?
 
