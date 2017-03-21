@@ -1,10 +1,14 @@
 ---
 
-- name: Install Ocserv via APT
+- name: Install Ocserv + deps
   apt:
-    name:  ocserv
+    name:  '{{ item }}'
     state: present
     update_cache: yes
+  with_items:
+    - ocserv
+    - libpam-oath
+    - liboath0
 
 - name: Ubuntu DTLS workaround (https://bugs.launchpad.net/ubuntu/+source/ocserv/+bug/1613155)
   service:

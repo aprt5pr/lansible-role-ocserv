@@ -1,7 +1,11 @@
 #jinja2: lstrip_blocks: "True"
 
 {% if ocserv_auth_method | lower == 'plain' %}
+  {% if ocserv_oath_enabled %}
+auth              = "plain[passwd={{ ocserv_auth_plain_file }},otp={{ ocserv_oath_users_file }}]"
+  {% else %}
 auth              = "plain[passwd={{ ocserv_auth_plain_file }}]"
+  {% endif %}
 {% else %}
 auth              = pam
 {% endif %}

@@ -1,0 +1,13 @@
+---
+
+- name: Configure OATH for users
+  template:
+    src:   users.oath.j2
+    dest:  '{{ ocserv_oath_users_file }}'
+    owner: root
+    group: root
+    mode:  0600
+  when:
+    - ocserv_update_oath_file | default(False)
+  tags:
+    - ocserv-oath

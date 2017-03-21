@@ -1,0 +1,12 @@
+#jinja2: lstrip_blocks: "True"
+{% for user in ocserv_users %}
+  {% if user.oath is defined %}
+    {# Time-based token #}
+    {% if user.oath.type is defined and user.oath.type | lower == 'totp' %}
+HOTP/T30 {{ user.name }} - {{ user.oath.secret }}
+    {# Counter-based token #}
+    {% else %}
+HOTP {{ user.name }} - {{ user.oath.secret }}
+    {% endif %}
+  {% endif %}
+{% endfor %}

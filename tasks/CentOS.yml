@@ -5,7 +5,11 @@
     name:  epel-release
     state: latest
 
-- name: Install Ocserv via YUM from EPEL
+- name: Install Ocserv + deps
   yum:
-    name:  ocserv
+    name:  '{{ item }}'
     state: present
+  with_items:
+    - ocserv
+    - liboath
+    - pam_oath

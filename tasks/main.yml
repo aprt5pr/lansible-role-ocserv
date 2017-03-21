@@ -11,6 +11,13 @@
 - name: Include OS-specific tasks
   include: '{{ ansible_distribution }}.yml'
 
+- name: Include Oath tasks
+  include: 'oath.yml'
+  when:
+    - ocserv_oath_enabled
+  tags:
+    - ocserv-oath
+
 - name: Include user-related tasks
   include: user.yml
   tags:
