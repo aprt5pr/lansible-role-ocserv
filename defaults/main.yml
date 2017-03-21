@@ -38,3 +38,4 @@ ocserv_dns_servers:
 ocserv_config_per_user_path:  '{{ ocserv_config_path }}/config-per-user/'
 ocserv_config_per_group_path: '{{ ocserv_config_path }}/config-per-group/'
 ocserv_enable_ip_forwarding:  True
+ocserv_systemd_unit_path:     /etc/systemd/system/ocserv.service
