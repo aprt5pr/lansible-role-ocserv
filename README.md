@@ -1,4 +1,11 @@
+# Ansible Role: Ocserv
+
+[![Build Status](https://travis-ci.org/aprt5pr/lansible-role-ocserv.svg?branch=master)](https://travis-ci.org/aprt5pr/lansible-role-ocserv)
+
+This role installs OpenConnect SSL VPN Server (ocserv).
+
 ### Requirements
+
 - Ansible >= 2.0
 
 ### What is Ocserv?
