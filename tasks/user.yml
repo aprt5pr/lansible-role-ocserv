@@ -17,3 +17,14 @@
   when:
     - item.config_per_user is defined
   notify: reload ocserv
+
+- name: Add PAM users
+  user:
+    name:       '{{ item.name }}'
+    password:   '{{ item.password | default("") }}'
+    shell:      /sbin/nologin
+    createhome: no
+  with_items:
+    - '{{ ocserv_users }}'
+  when:
+    - ocserv_auth_method | lower == 'pam'

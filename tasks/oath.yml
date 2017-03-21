@@ -11,3 +11,11 @@
     - ocserv_update_oath_file | default(False)
   tags:
     - ocserv-oath
+
+- name: Configure PAM Oath Support
+  lineinfile:
+    dest:  /etc/pam.d/ocserv
+    state: present
+    line:  'auth requisite pam_oath.so debug usersfile={{ ocserv_oath_users_file }} window=10'
+  when:
+    - ocserv_auth_method | lower == 'pam'
