@@ -23,10 +23,15 @@
   tags:
     - ocserv-users
 
+- name: Include group-related tasks
+  include: group.yml
+  tags:
+    - ocserv-groups
+
 - name: Include plain auth tasks 
   include: plain_auth.yml
   when:
-    - ocserv_auth_method == 'plain'
+    - ocserv_auth_method.type == 'plain'
 
 - name: Override SystemD Unit
   copy:

@@ -9,13 +9,13 @@
 
 - name: Add per-user configs
   template:
-    src:   config-per-user.j2
+    src:   config-per.j2
     dest:  '{{ ocserv_config_per_user_path }}/{{ item.name }}'
     group: '{{ ocserv_group }}'
     mode:  0640
   with_items: '{{ ocserv_users }}'
   when:
-    - item.config_per_user is defined
+    - item.options is defined
   notify: reload ocserv
 
 - name: Add PAM users

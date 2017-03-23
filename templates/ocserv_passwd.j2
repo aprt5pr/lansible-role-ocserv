@@ -1,4 +1,4 @@
 #jinja2: lstrip_blocks: "True"
 {% for user in ocserv_users %}
-{{ user.name }}:*:{{ user.password | default('') }}
+{{ user.name }}:{{ user.group }}:{{ user.password | default('') }}
 {% endfor %}

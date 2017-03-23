@@ -9,6 +9,7 @@ ocserv_auth_extra_methods:
   - type: pam
 ocserv_auth_plain_file:       '{{ ocserv_config_path }}/users.passwd'
 ocserv_users:                 []
+ocserv_groups:                []
 
 ocserv_listen_hosts:          []
 ocserv_listen_host_is_dyndns: False

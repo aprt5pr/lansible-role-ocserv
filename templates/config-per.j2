@@ -1,0 +1,12 @@
+#jinja2: lstrip_blocks: "True"
+{# Check https://gitlab.com/ocserv/ocserv/blob/master/doc/sample.config#L537-546 #}
+{# for all possible per-user/per-group #}
+{% for option in item.options %}
+  {% if option.value is string %}
+{{ option.name }} = {{ option.value }}
+  {% else %}
+    {% for v in option.value %}
+{{ option.name }} = {{ v }}
+    {% endfor %}
+  {% endif %}
+{% endfor %}
