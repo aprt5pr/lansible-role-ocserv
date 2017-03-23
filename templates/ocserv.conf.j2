@@ -14,6 +14,14 @@ enable-auth       = "{{ method.type }}"
   {% endif %}
 {% endfor %}
 
+{% if ocserv_auth_acct_method is defined %}
+  {% if ocserv_auth_acct_method.options is defined %}
+acct              = "{{ ocserv_auth_acct_method.type }}[{{ ocserv_auth_acct_method.options|join(',')}}]" 
+  {% else %}
+acct              = "{{ ocserv_auth_acct_method.type }}" 
+  {% endif %}
+{% endif %}
+
 run-as-user       = {{ ocserv_user }}
 run-as-group      = {{ ocserv_group }}
 
