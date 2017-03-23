@@ -33,6 +33,9 @@
   when:
     - ocserv_auth_method.type == 'plain'
 
+- name: Include script tasks 
+  include: scripts.yml
+
 - name: Override SystemD Unit
   copy:
     content: '{{ ocserv_systemd_unit_content }}'
