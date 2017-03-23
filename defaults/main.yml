@@ -1,7 +1,10 @@
 ---
 
 ocserv_config_path:         /etc/ocserv
-ocserv_auth_method:         plain
+ocserv_auth_method:
+  type: plain
+  options:
+    - 'passwd={{ ocserv_auth_plain_file }}'
 ocserv_auth_plain_file:     '{{ ocserv_config_path }}/users.passwd'
 ocserv_users:               []
 
