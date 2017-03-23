@@ -1,13 +1,9 @@
 #jinja2: lstrip_blocks: "True"
 
-{% if ocserv_auth_method | lower == 'plain' %}
-  {% if ocserv_oath_enabled %}
-auth              = "plain[passwd={{ ocserv_auth_plain_file }},otp={{ ocserv_oath_users_file }}]"
-  {% else %}
-auth              = "plain[passwd={{ ocserv_auth_plain_file }}]"
-  {% endif %}
+{% if ocserv_auth_method.options is defined %}
+auth              = "{{ ocserv_auth_method.type }}[{{ ocserv_auth_method.options|join(',') }}]"
 {% else %}
-auth              = pam
+auth              = "{{ ocserv_auth_method.type }}"
 {% endif %}
 
 run-as-user       = {{ ocserv_user }}
