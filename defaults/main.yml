@@ -5,6 +5,8 @@ ocserv_auth_method:
   type: plain
   options:
     - 'passwd={{ ocserv_auth_plain_file }}'
+ocserv_auth_extra_methods:
+  - type: pam
 ocserv_auth_plain_file:     '{{ ocserv_config_path }}/users.passwd'
 ocserv_users:               []
 

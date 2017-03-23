@@ -6,6 +6,14 @@ auth              = "{{ ocserv_auth_method.type }}[{{ ocserv_auth_method.options
 auth              = "{{ ocserv_auth_method.type }}"
 {% endif %}
 
+{% for method in ocserv_auth_extra_methods %}
+  {% if method.options is defined %}
+enable-auth       = "{{ method.type }}[{{ method.options|join(',') }}]"
+  {% else %}
+enable-auth       = "{{ method.type }}"
+  {% endif %}
+{% endfor %}
+
 run-as-user       = {{ ocserv_user }}
 run-as-group      = {{ ocserv_group }}
 
