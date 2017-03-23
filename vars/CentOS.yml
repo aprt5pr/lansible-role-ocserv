@@ -2,8 +2,6 @@
 
 ocserv_user:             ocserv
 ocserv_group:            ocserv
-ocserv_socket_file:      ocserv.sock
 ocserv_server_cert_path: /etc/pki/ocserv/public/server.crt
 ocserv_server_key_path:  /etc/pki/ocserv/private/server.key
 ocserv_ca_cert:          /etc/pki/ocserv/cacerts/ca.crt # only used if auth is 'cert'
-ocserv_pid_file:         /var/run/ocserv.pid

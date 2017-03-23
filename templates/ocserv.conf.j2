@@ -1,86 +1,102 @@
 #jinja2: lstrip_blocks: "True"
 
 {% if ocserv_auth_method.options is defined %}
-auth              = "{{ ocserv_auth_method.type }}[{{ ocserv_auth_method.options|join(',') }}]"
+auth                  = "{{ ocserv_auth_method.type }}[{{ ocserv_auth_method.options|join(',') }}]"
 {% else %}
-auth              = "{{ ocserv_auth_method.type }}"
+auth                  = "{{ ocserv_auth_method.type }}"
 {% endif %}
 
 {% for method in ocserv_auth_extra_methods %}
   {% if method.options is defined %}
-enable-auth       = "{{ method.type }}[{{ method.options|join(',') }}]"
+enable-auth           = "{{ method.type }}[{{ method.options|join(',') }}]"
   {% else %}
-enable-auth       = "{{ method.type }}"
+enable-auth           = "{{ method.type }}"
   {% endif %}
 {% endfor %}
 
 {% if ocserv_auth_acct_method is defined %}
   {% if ocserv_auth_acct_method.options is defined %}
-acct              = "{{ ocserv_auth_acct_method.type }}[{{ ocserv_auth_acct_method.options|join(',')}}]" 
+acct                  = "{{ ocserv_auth_acct_method.type }}[{{ ocserv_auth_acct_method.options|join(',')}}]" 
   {% else %}
-acct              = "{{ ocserv_auth_acct_method.type }}" 
+acct                  = "{{ ocserv_auth_acct_method.type }}" 
   {% endif %}
 {% endif %}
 
-run-as-user       = {{ ocserv_user }}
-run-as-group      = {{ ocserv_group }}
+run-as-user           = {{ ocserv_user }}
+run-as-group          = {{ ocserv_group }}
 
-{% if ocserv_listen_ip is defined %}
-listen-host       = {{ ocserv_listen_ip }}
+{% if ocserv_chroot_dir is defined %}
+chroot-dir            = {{ ocserv_chroot_dir }}
 {% endif %}
-tcp-port          = {{ ocserv_tcp_port }}
-udp-port          = {{ ocserv_udp_port }}
 
-default-domain    = {{ ocserv_default_domain }}
+{% for host in ocserv_listen_hosts | default([]) %}
+listen-host           = {{ host }}
+{% endfor %}
+listen-host-is-dyndns = {{ ocserv_listen_host_is_dyndns }}
+tcp-port              = {{ ocserv_tcp_port }}
+udp-port              = {{ ocserv_udp_port }}
+{% if ocserv_listen_clear_file is defined %}
+listen-clear-file     = {{ ocserv_listen_clear_file }}
+{% endif %}
 
-socket-file       = {{ ocserv_socket_file }}
+default-domain        = {{ ocserv_default_domain }}
 
-isolate-workers   = {{ ocserv_isolate_workers }}
+socket-file           = {{ ocserv_socket_file }}
+{% if ocserv_occtl_socket_file is defined %}
+occtl-socket-file     = {{ ocserv_occtl_socket_file }}
+{% endif %}
 
-max-clients       = {{ ocserv_max_clients }}
-max-same-clients  = {{ ocserv_max_same_clients }}
+banner                = {{ ocserv_connect_banner }}
 
-keepalive         = {{ ocserv_keepalive }}
+isolate-workers       = {{ ocserv_isolate_workers }}
 
-dpd               = {{ ocserv_dpd }}
-mobile-dpd        = {{ ocserv_mobile_dpd }}
+max-clients           = {{ ocserv_max_clients }}
+max-same-clients      = {{ ocserv_max_same_clients }}
 
-try-mtu-discovery = {{ ocserv_mtu_discovery }}
+keepalive             = {{ ocserv_keepalive }}
 
-server-cert       = {{ ocserv_server_cert_path }}
-server-key        = {{ ocserv_server_key_path }}
-tls-priorities    = {{ ocserv_tls_prio }}
+dpd                   = {{ ocserv_dpd }}
+mobile-dpd            = {{ ocserv_mobile_dpd }}
 
-auth-timeout      = {{ ocserv_auth_timeout }}
-min-reauth-time   = {{ ocserv_min_reauth_time }}
-max-ban-score     = {{ ocserv_max_ban_score }}
-ban-reset-time    = {{ ocserv_ban_reset_time }}
-cookie-timeout    = {{ ocserv_cookie_timeout }}
-deny-roaming      = {{ ocserv_deny_roaming }}
-rekey-time        = {{ ocserv_rekey_time }}
-rekey-method      = {{ ocserv_rekey_method }}
+try-mtu-discovery     = {{ ocserv_mtu_discovery }}
 
-use-occtl         = {{ ocserv_use_occtl }}
+server-cert           = {{ ocserv_server_cert_path }}
+server-key            = {{ ocserv_server_key_path }}
+tls-priorities        = {{ ocserv_tls_prio }}
+{% if ocserv_dh_params_path is defined %}
+dh-params             = {{ ocserv_dh_params_path }}
+{% endif %}
 
-pid-file          = {{ ocserv_pid_file }}
+auth-timeout          = {{ ocserv_auth_timeout }}
+min-reauth-time       = {{ ocserv_min_reauth_time }}
+max-ban-score         = {{ ocserv_max_ban_score }}
+ban-reset-time        = {{ ocserv_ban_reset_time }}
+cookie-timeout        = {{ ocserv_cookie_timeout }}
+deny-roaming          = {{ ocserv_deny_roaming }}
+rekey-time            = {{ ocserv_rekey_time }}
+rekey-method          = {{ ocserv_rekey_method }}
 
-device            = {{ ocserv_device }}
+use-occtl             = {{ ocserv_use_occtl }}
 
-predictable-ips   = {{ ocserv_use_predictable_ips }}
+pid-file              = {{ ocserv_pid_file }}
 
-ipv4-network      = {{ ocserv_ipv4_network }}
+device                = {{ ocserv_device }}
+
+predictable-ips       = {{ ocserv_use_predictable_ips }}
+
+ipv4-network          = {{ ocserv_ipv4_network }}
 
 {% for d in ocserv_dns_servers %}
-dns               = {{ d }}
+dns                   = {{ d }}
 {% endfor %}
 
-ping-leases       = {{ ocserv_ping_leases }}
+ping-leases           = {{ ocserv_ping_leases }}
 
-config-per-user   = {{ ocserv_config_per_user_path }}
-config-per-group  = {{ ocserv_config_per_group_path }}
+config-per-user       = {{ ocserv_config_per_user_path }}
+config-per-group      = {{ ocserv_config_per_group_path }}
 
 {% if ocserv_connect_script_path is defined %} 
   {% if ocserv_connect_script_content is defined %}
-connect-script    = {{ ocserv_connect_script_path }}
+connect-script        = {{ ocserv_connect_script_path }}
   {% endif %}
 {% endif %}
