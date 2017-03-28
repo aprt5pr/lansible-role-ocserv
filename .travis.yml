@@ -40,4 +40,7 @@ script:
     || (echo 'Idempotence test: fail' && exit 1)
 
   # Ensure Ocserv is running
-  - 'docker exec -i "$(cat ${container_id})" openssl s_client -connect 127.0.0.1:443 < /dev/null'
+  - 'docker exec -i "$(cat ${container_id})" openssl s_client -connect $(cat ${container_id}| cut -c 1-12):443 < /dev/null'
+
+  # Test authentication
+  - 'echo alicepass | docker exec -i "$(cat ${container_id})" openconnect --authenticate --passwd-on-stdin -u alice https://$(cat ${container_id}| cut -c 1-12)'

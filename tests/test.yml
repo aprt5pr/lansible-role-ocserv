@@ -1,5 +1,35 @@
 ---
 
+# The role needs to run first
 - hosts: all
   roles:
     - lansible-role-ocserv
+
+- hosts: all
+  tasks:
+    - name: Include OS-specific test variables
+      include_vars: "{{ item }}"
+      with_first_found:
+        - files:
+          - "vars/{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+          - "vars/{{ ansible_distribution }}.yml"
+          skip: True
+ 
+    - name: Install test dependencies
+      package:
+        name:  '{{ item }}'
+        state: latest
+      with_items:
+        - openconnect
+
+    - name: Symlink Ocserv-generated CA cert
+      file:
+        src:   '{{ ca_cert_path }}'
+        dest:  '{{ ca_cert_link_path }}'
+        state: link
+      register: ca_cert_link
+
+    - name: Trust Ocserv-generated CA cert
+      command: '{{ ca_trust_update_command }}'
+      when:
+        - ca_cert_link.changed

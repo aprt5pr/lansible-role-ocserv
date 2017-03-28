@@ -1,0 +1,5 @@
+---
+
+ca_cert_path:            /etc/ssl/certs/ssl-cert-snakeoil.pem
+ca_cert_link_path:       /usr/local/share/ca-certificates/ocserv.crt
+ca_trust_update_command: update-ca-certificates
