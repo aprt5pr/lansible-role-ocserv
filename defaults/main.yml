@@ -8,7 +8,10 @@ ocserv_auth_method:
 ocserv_auth_extra_methods:
   - type: pam
 ocserv_auth_plain_file:       '{{ ocserv_config_path }}/users.passwd'
-ocserv_users:                 []
+ocserv_users:
+  - name:     alice
+    type:     plain
+    password: '$5$MhilY8thnRZLy7QJ$L8llhkM8ZcbHiAPDcGRHOIfW7/W9pC8JuuAFukZF.BA' # alicepass
 ocserv_groups:                []
 
 ocserv_listen_hosts:          []
