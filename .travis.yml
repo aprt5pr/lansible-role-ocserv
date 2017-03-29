@@ -44,3 +44,7 @@ script:
 
   # Test authentication
   - 'echo alicepass | docker exec -i "$(cat ${container_id})" openconnect --authenticate --passwd-on-stdin -u alice https://$(cat ${container_id}| cut -c 1-12)'
+
+notifications:
+  email: false
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
