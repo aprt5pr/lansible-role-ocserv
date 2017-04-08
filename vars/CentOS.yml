@@ -1,7 +1,7 @@
 ---
 
-ocserv_user:             ocserv
-ocserv_group:            ocserv
-ocserv_server_cert_path: /etc/pki/ocserv/public/server.crt
-ocserv_server_key_path:  /etc/pki/ocserv/private/server.key
-ocserv_ca_cert:          /etc/pki/ocserv/cacerts/ca.crt # only used if auth is 'cert'
+default_ocserv_user:             ocserv
+default_ocserv_group:            ocserv
+default_ocserv_server_cert_path: /etc/pki/ocserv/public/server.crt
+default_ocserv_server_key_path:  /etc/pki/ocserv/private/server.key
+default_ocserv_ca_cert_path:     /etc/pki/ocserv/cacerts/ca.crt

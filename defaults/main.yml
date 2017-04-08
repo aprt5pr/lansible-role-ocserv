@@ -49,9 +49,17 @@ ocserv_connect_banner:        "Unauthorized access will be punished to the fulle
 ocserv_dns_servers:
   - 209.244.0.3
   - 209.244.0.4
-ocserv_config_per_user_path:  '{{ ocserv_config_path }}/config-per-user/'
-ocserv_config_per_group_path: '{{ ocserv_config_path }}/config-per-group/'
-ocserv_enable_ip_forwarding:  True
-ocserv_systemd_unit_path:     /etc/systemd/system/ocserv.service
-ocserv_oath_enabled:          False
-ocserv_oath_users_file:       '{{ ocserv_config_path }}/users.oath'
+ocserv_config_per_user_path:     '{{ ocserv_config_path }}/config-per-user/'
+ocserv_config_per_group_path:    '{{ ocserv_config_path }}/config-per-group/'
+ocserv_enable_ip_forwarding:     True
+ocserv_systemd_unit_path:        /etc/systemd/system/ocserv.service
+ocserv_oath_enabled:             False
+ocserv_oath_users_file:          '{{ ocserv_config_path }}/users.oath'
+
+# Vars with defaults
+ocserv_user:                 '{{ (override_ocserv_user is defined )  | ternary(override_ocserv_user,default_ocserv_user) }}' 
+ocserv_group:                '{{ (override_ocserv_group is defined ) | ternary(override_ocserv_group,default_ocserv_group) }}' 
+ocserv_server_cert_path:     '{{ (override_ocserv_server_cert_path is defined) | ternary(override_ocserv_server_cert_path,default_ocserv_server_cert_path) }}'
+ocserv_server_key_path:      '{{ (override_ocserv_server_key_path is defined) | ternary(override_ocserv_server_key_path,default_ocserv_server_cert_path) }}'
+ocserv_ca_cert_path:         '{{ (override_ocserv_ca_cert_path is defined) | ternary(override_ocserv_ca_cert_path,default_ocserv_ca_cert_path) }}'
+ocserv_systemd_unit_content: '{{ (override_ocserv_systemd_unit_content is defined) | ternary(override_ocserv_systemd_unit_content,default_ocserv_systemd_unit_content) }}'
