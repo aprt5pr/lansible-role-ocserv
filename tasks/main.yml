@@ -28,11 +28,18 @@
   tags:
     - ocserv-groups
 
-- name: Include plain auth tasks 
-  include: plain_auth.yml
+- name: Execute plain auth tasks 
+  template:
+    src:   ocserv_passwd.j2
+    dest:  '{{ ocserv_auth_plain_file }}'
+    owner: root
+    group: root
+    mode:  0600
   when:
-    - ocserv_auth_method.type == 'plain'
-
+    - item.type == 'plain' or ocserv_auth_method.type == 'plain'
+  with_items:
+    - '{{ ocserv_auth_extra_methods }}'
+  
 - name: Include script tasks 
   include: scripts.yml
 

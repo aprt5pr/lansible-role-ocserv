@@ -1,9 +1,0 @@
----
-
-- name: Add Ocserv plain auth users
-  template:
-    src:   ocserv_passwd.j2
-    dest:  '{{ ocserv_auth_plain_file }}'
-    owner: root
-    group: root
-    mode:  0600
