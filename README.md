@@ -45,9 +45,11 @@ If everything goes OK, you'll have Ocserv configured with a plain authentication
 ### Gotchas
 - This role (currently) does not:
    - Configure any source NAT. You'll need to configure this manually (e.g. `firewall-cmd --zone=public --add-masquerade`).
-   - Manage the firewall - you may be unable to connect to the VPN remotely. The following should get you up and running:
-     - `firewall-cmd --zone=public --add-port=443/tcp`
-     - `firewall-cmd --zone=public --add-port=443/udp`
+   - Manage the firewall
+     - Clients may be unable to connect to the VPN remotely. The following should get you up and running:
+       - `firewall-cmd --zone=public --add-port=443/tcp`
+       - `firewall-cmd --zone=public --add-port=443/udp`
+     - Connected clients will be able to access services that are listening on all addresses(!)
 
 ### How can I contribute code to this project?
 
