@@ -2,8 +2,8 @@
 
 - name: Create connect script
   copy:
-    content: '{{ ocserv_connect_script_content }}'
-    dest:    '{{ ocserv_connect_script_path }}'
+    content: "{{ ocserv_connect_script_content }}"
+    dest:    "{{ ocserv_config['connect_script'] }}"
     owner:   root
     group:   root
     mode:    0700
@@ -12,8 +12,8 @@
 
 - name: Create disconnect script
   copy:
-    content: '{{ ocserv_disconnect_script_content }}'
-    dest:    '{{ ocserv_disconnect_script_path }}'
+    content: "{{ ocserv_disconnect_script_content }}"
+    dest:    "{{ ocserv_config['disconnect_script'] }}"
     owner:   root
     group:   root
     mode:    0700

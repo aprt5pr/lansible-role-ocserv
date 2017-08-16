@@ -2,18 +2,18 @@
 
 - name: Create config-per-group path
   file:
-    path:  '{{ ocserv_config_per_group_path }}'
-    group: '{{ ocserv_group }}'
+    path:  "{{ ocserv_config['config_per_group'] }}"
+    group: "{{ ocserv_config['run_as_group'] }}"
     mode:  0750
     state: directory
 
 - name: Add per-group configs
   template:
     src:   config-per.j2
-    dest:  '{{ ocserv_config_per_group_path }}/{{ item.name }}'
-    group: '{{ ocserv_group }}'
+    dest:  "{{ ocserv_config['config_per_group'] }}/{{ item['name'] }}"
+    group: "{{ ocserv_config['run_as_group'] }}"
     mode:  0640
-  with_items: '{{ ocserv_groups }}'
+  with_items: "{{ ocserv_groups }}"
   when:
     - item.options is defined
   notify: reload ocserv

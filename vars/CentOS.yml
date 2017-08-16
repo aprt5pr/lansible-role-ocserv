@@ -1,7 +1,8 @@
 ---
 
-ocserv_user:             ocserv
-ocserv_group:            ocserv
-ocserv_server_cert_path: /etc/pki/ocserv/public/server.crt
-ocserv_server_key_path:  /etc/pki/ocserv/private/server.key
-ocserv_ca_cert:          /etc/pki/ocserv/cacerts/ca.crt
+override_ocserv_config:
+  run_as_user:  ocserv
+  run_as_group: ocserv
+  server_cert:  /etc/pki/ocserv/public/server.crt
+  server_key:   /etc/pki/ocserv/private/server.key
+  ca_cert:      /etc/pki/ocserv/cacerts/ca.crt

@@ -31,22 +31,23 @@
 - name: Execute plain auth tasks 
   template:
     src:   ocserv_passwd.j2
-    dest:  '{{ ocserv_auth_plain_file }}'
+    dest:  "{{ ocserv_passwd }}"
     owner: root
     group: root
     mode:  0600
-  when:
-    - item.type == 'plain' or ocserv_auth_method.type == 'plain'
   with_items:
-    - '{{ ocserv_auth_extra_methods }}'
+    - "{{ ocserv_config['auth'] }}"
+    - "{{ ocserv_config['enable_auth'] | default([]) }}"
+  when:
+    - item['name'] | lower == 'plain'
   
 - name: Include script tasks 
   include: scripts.yml
 
 - name: Add SSL certificate file
   copy:
-    content: '{{ ocserv_server_cert_content }}'
-    dest:    '{{ ocserv_server_cert_path }}'
+    content: "{{ ocserv_server_cert_content }}"
+    dest:    "{{ ocserv_config['server_cert'] }}"
     owner:   root
     group:   root
     mode:    0644
@@ -55,8 +56,8 @@
 
 - name: Add SSL private key file
   copy:
-    content: '{{ ocserv_server_key_content }}'
-    dest:    '{{ ocserv_server_key_path }}'
+    content: "{{ ocserv_server_key_content }}"
+    dest:    "{{ ocserv_config['server_key'] }}"
     owner:   root
     group:   root
     mode:    0600

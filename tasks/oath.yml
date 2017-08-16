@@ -17,5 +17,8 @@
     dest:  /etc/pam.d/ocserv
     state: present
     line:  'auth requisite pam_oath.so debug usersfile={{ ocserv_oath_users_file }} window=10'
+  with_items:
+    - "{{ ocserv_config['auth'] }}"
+    - "{{ ocserv_config['enable_auth'] }}"
   when:
-    - ocserv_auth_method | lower == 'pam'
+    - item['name'] | lower == 'pam'
