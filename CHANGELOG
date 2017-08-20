@@ -1,0 +1,8 @@
+* Version 0.2.0 (released Aug 20 2017)
+- Remove some playbook defaults
+- Rename playbook defaults to match Ocserv naming
+- Remove creation of PAM users
+- Modify server config template to not use statically defined options
+
+* Version 0.1.0 (released Apr 27 2017)
+- Initial release
