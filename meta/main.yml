@@ -12,6 +12,9 @@ galaxy_info:
     - name: EL
       versions:
         - 7
+    - name: Fedora
+      versions:
+        - all
 
   galaxy_tags:
     - ocserv

@@ -1,0 +1,5 @@
+---
+
+ca_cert_path:            /etc/pki/ocserv/cacerts/ca.crt
+ca_cert_link_path:       /etc/pki/ca-trust/source/anchors/ocserv-ca.crt
+ca_trust_update_command: update-ca-trust

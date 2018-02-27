@@ -82,6 +82,15 @@
   when:
     - ansible_distribution == 'CentOS'
 
+- name: Configure Ocserv for Fedora
+  template:
+    src:  ocserv.conf.j2
+    dest: /etc/ocserv/ocserv.conf
+    validate: ocserv --test-config --config=%s
+  notify: restart ocserv
+  when:
+    - ansible_distribution == 'Fedora'
+
 # Ubuntu's Ocserv version doesn't have --test-config option
 - name: Configure Ocserv for Ubuntu
   template:
