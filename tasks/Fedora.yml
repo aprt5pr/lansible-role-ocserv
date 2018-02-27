@@ -8,3 +8,4 @@
     - ocserv
     - liboath
     - pam_oath
+    - procps-ng
