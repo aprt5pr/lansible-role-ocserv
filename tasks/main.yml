@@ -28,7 +28,7 @@
   tags:
     - ocserv-groups
 
-- name: Execute plain auth tasks 
+- name: Execute plain auth tasks
   template:
     src:   ocserv_passwd.j2
     dest:  "{{ ocserv_passwd }}"
@@ -40,8 +40,8 @@
     - "{{ ocserv_config['enable_auth'] | default([]) }}"
   when:
     - item['name'] | lower == 'plain'
-  
-- name: Include script tasks 
+
+- name: Include script tasks
   include: scripts.yml
 
 - name: Add SSL certificate file
@@ -67,13 +67,24 @@
 - name: Enable forwarding from tun interfaces to public interface
   sysctl:
     name:       net.ipv4.ip_forward
-    value:      1   
-    sysctl_set: yes 
+    value:      1
+    sysctl_set: yes
     state:      present
-    reload:     yes 
+    reload:     yes
   when: ocserv_enable_ip_forwarding
 
-- name: Configure Ocserv for CentOS
+# ocserv --test-config will return failure if certs are not pre-existing
+- name: Stat SSL cert file
+  stat:
+    path: "{{ ocserv_config['server_cert'] }}"
+  register: cert_file
+- name: Stat SSL key file
+  stat:
+    path: "{{ ocserv_config['server_key'] }}"
+  register: key_file
+
+
+- name: Configure Ocserv for CentOS w/ certs
   template:
     src:  ocserv.conf.j2
     dest: /etc/ocserv/ocserv.conf
@@ -81,15 +92,19 @@
   notify: restart ocserv
   when:
     - ansible_distribution == 'CentOS'
+    - cert_file.stat.exists
+    - key_file.stat.exists
 
 # Ubuntu's Ocserv version doesn't have --test-config option
-- name: Configure Ocserv for Ubuntu
+- name: Configure Ocserv
   template:
     src:  ocserv.conf.j2
     dest: /etc/ocserv/ocserv.conf
   notify: restart ocserv
   when:
-    - ansible_distribution == 'Ubuntu'
+    - ansible_distribution == 'Ubuntu' or
+      cert_file.stat.exists == False or
+      key_file.stat.exists == False
 
 - name: Start and enable Ocserv
   service:
